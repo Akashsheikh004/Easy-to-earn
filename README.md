@@ -2,148 +2,93 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <title>Easy to Earn</title>
+  <title>হোম - Easy to Earn</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d');
+      background: url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1350&q=80');
       background-size: cover;
       background-position: center;
-      min-height: 100vh;
-      color: #fff;
+      color: white;
     }
 
     .container {
-      background: rgba(0, 0, 0, 0.7);
       max-width: 400px;
-      margin: 50px auto;
-      padding: 30px;
-      border-radius: 10px;
-    }
-
-    h2 {
+      margin: 60px auto;
+      padding: 25px;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 15px;
       text-align: center;
-      color: #00ffcc;
-    }
-
-    input, button {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 5px;
     }
 
     button {
-      background-color: #00cc99;
-      color: #fff;
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      font-size: 18px;
       font-weight: bold;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
     }
 
-    .link {
-      text-align: center;
-      margin-top: 10px;
-    }
+    .recharge { background-color: #28a745; }
+    .withdraw { background-color: #ff9800; }
+    .support { background-color: #2196f3; }
+    .reward { background-color: #9c27b0; }
 
-    .link a {
-      color: #66ffff;
-      text-decoration: underline;
-      cursor: pointer;
+    .balance {
+      margin-top: 20px;
+      font-size: 20px;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h2>🏠 হোম</h2>
 
-  <div class="container" id="registerPage">
-    <h2>👤 রেজিস্ট্রেশন</h2>
-    <input type="text" id="reg_name" placeholder="আপনার নাম" required>
-    <input type="text" id="reg_mobile" placeholder="মোবাইল নাম্বার" required>
-    <input type="text" id="reg_ref" placeholder="রেফার কোড (ঐচ্ছিক)">
-    <input type="password" id="reg_pass" placeholder="পাসওয়ার্ড দিন" required>
-    <button onclick="register()">✅ একাউন্ট তৈরি করুন</button>
-    <div class="link">একাউন্ট আছে? <a onclick="showLogin()">লগইন করুন</a></div>
-  </div>
+    <button class="recharge" onclick="alert('রিচার্জ ফর্ম আসবে')">💳 টাকা রিচার্জ</button>
+    <button class="withdraw" onclick="alert('উত্তোলন ফর্ম আসবে')">🏧 উত্তোলন</button>
+    <button class="support" onclick="alert('গ্রাহক সেবার তথ্য আসবে')">📞 গ্রাহক সেবা</button>
 
-  <div class="container" id="loginPage" style="display:none;">
-    <h2>🔐 লগইন</h2>
-    <input type="text" id="log_mobile" placeholder="মোবাইল নাম্বার" required>
-    <input type="password" id="log_pass" placeholder="পাসওয়ার্ড দিন" required>
-    <button onclick="login()">লগইন করুন</button>
-    <div class="link">নতুন একাউন্ট? <a onclick="showRegister()">রেজিস্টার করুন</a></div>
-  </div>
+    <div class="balance">💰 একাউন্ট ব্যালেন্স: <span id="balance">0</span> টাকা</div>
 
-  <div class="container" id="profilePage" style="display:none;">
-    <h2>🎉 প্রোফাইল</h2>
-    <p><strong>নাম:</strong> <span id="p_name"></span></p>
-    <p><strong>মোবাইল:</strong> <span id="p_mobile"></span></p>
-    <p><strong>রেফার:</strong> <span id="p_ref"></span></p>
-    <p><strong>ব্যালান্স:</strong> <span id="p_bal"></span> টাকা</p>
+    <button class="reward" onclick="collectReward()">🎁 লগ ইন পুরস্কার</button>
   </div>
 
   <script>
-    function register() {
-      const name = document.getElementById("reg_name").value.trim();
-      const mobile = document.getElementById("reg_mobile").value.trim();
-      const ref = document.getElementById("reg_ref").value.trim();
-      const pass = document.getElementById("reg_pass").value;
+    function getUser() {
+      return JSON.parse(localStorage.getItem("easy_user")) || { balance: 0 };
+    }
 
-      if (!name || !mobile || !pass) {
-        alert("সব ঘর পূরণ করুন!");
-        return;
-      }
-
-      const user = { name, mobile, ref, pass, balance: 20 };
+    function setUser(user) {
       localStorage.setItem("easy_user", JSON.stringify(user));
-      showProfile(user);
     }
 
-    function login() {
-      const mobile = document.getElementById("log_mobile").value.trim();
-      const pass = document.getElementById("log_pass").value;
+    function updateBalanceDisplay() {
+      const user = getUser();
+      document.getElementById("balance").textContent = user.balance;
+    }
 
-      const data = localStorage.getItem("easy_user");
-      if (!data) {
-        alert("কোনো একাউন্ট পাওয়া যায়নি!");
+    function collectReward() {
+      const now = new Date();
+      const last = localStorage.getItem("last_reward_time");
+
+      if (last && (now - new Date(last)) < 24 * 60 * 60 * 1000) {
+        alert("⚠️ ২৪ ঘন্টার আগে আবার নেওয়া যাবে না!");
         return;
       }
 
-      const user = JSON.parse(data);
-      if (user.mobile === mobile && user.pass === pass) {
-        showProfile(user);
-      } else {
-        alert("ভুল মোবাইল নাম্বার বা পাসওয়ার্ড!");
-      }
+      let user = getUser();
+      user.balance += 10;
+      setUser(user);
+      localStorage.setItem("last_reward_time", now.toString());
+      updateBalanceDisplay();
+      alert("🎉 ১০ টাকা যোগ হয়েছে!");
     }
 
-    function showProfile(user) {
-      document.getElementById("p_name").textContent = user.name;
-      document.getElementById("p_mobile").textContent = user.mobile;
-      document.getElementById("p_ref").textContent = user.ref;
-      document.getElementById("p_bal").textContent = user.balance;
-
-      document.getElementById("registerPage").style.display = "none";
-      document.getElementById("loginPage").style.display = "none";
-      document.getElementById("profilePage").style.display = "block";
-    }
-
-    function showLogin() {
-      document.getElementById("registerPage").style.display = "none";
-      document.getElementById("loginPage").style.display = "block";
-    }
-
-    function showRegister() {
-      document.getElementById("loginPage").style.display = "none";
-      document.getElementById("registerPage").style.display = "block";
-    }
-
-    // অটো চেক
-    const savedUser = localStorage.getItem("easy_user");
-    if (savedUser) {
-      showLogin();  // আগেই একাউন্ট থাকলে Login দেখাবে
-    }
+    updateBalanceDisplay();
   </script>
-
 </body>
 </html>
