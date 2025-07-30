@@ -103,3 +103,35 @@
 
 </body>
 </html>
+
+<script>
+function registerUser() {
+  const name = document.getElementById("name").value;
+  const pass = document.getElementById("password").value;
+
+  if (!name || !pass) {
+    alert("সব তথ্য দিন");
+    return;
+  }
+
+  const user = { name: name, password: pass, balance: 0 };
+  localStorage.setItem("easy_user", JSON.stringify(user));
+
+  // ✅ হোম পেইজে পাঠিয়ে দিচ্ছে:
+  window.location.href = "home.html";
+}
+</script>
+<script>
+function loginUser() {
+  const storedUser = JSON.parse(localStorage.getItem("easy_user"));
+  const pass = document.getElementById("password").value;
+
+  if (!storedUser || storedUser.password !== pass) {
+    alert("ভুল পাসওয়ার্ড!");
+    return;
+  }
+
+  // ✅ লগইন সফল হলে হোমে যাবে:
+  window.location.href = "home.html";
+}
+</script>
