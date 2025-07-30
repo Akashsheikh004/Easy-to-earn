@@ -30,12 +30,13 @@
 </head>
 <body>
 
-  <h2>👤 রেজিস্ট্রেশন করুন</h2>
+  <h2>👤 একাউন্ট খুলুন</h2>
 
   <input type="text" id="name" placeholder="আপনার নাম লিখুন" />
   <input type="text" id="mobile" placeholder="মোবাইল নাম্বার লিখুন" />
   <input type="text" id="referral" placeholder="ইনভাইট কোড লিখুন" />
-  <button onclick="register()">✅ রেজিস্টার</button>
+  <input type="password" id="password" placeholder="পাসওয়ার্ড লিখুন" />
+  <button onclick="register()">✅ একাউন্ট তৈরি করুন</button>
 
   <div class="profile" id="profile" style="display:none;">
     <h3>📄 প্রোফাইল:</h3>
@@ -50,8 +51,9 @@
       const name = document.getElementById("name").value;
       const mobile = document.getElementById("mobile").value;
       const referral = document.getElementById("referral").value;
+      const password = document.getElementById("password").value;
 
-      if (!name || !mobile) {
+      if (!name || !mobile || !password) {
         alert("সব ঘর পূরণ করুন!");
         return;
       }
@@ -60,6 +62,7 @@
         name,
         mobile,
         referral,
+        password,
         balance: 20
       };
 
@@ -83,4 +86,4 @@
   </script>
 
 </body>
-</html># Easy-to-earn
+</html>
