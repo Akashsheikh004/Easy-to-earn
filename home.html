@@ -13,9 +13,27 @@
       color: white;
     }
 
+    nav {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
     .container {
       max-width: 400px;
-      margin: 60px auto;
+      margin: 40px auto;
       padding: 25px;
       background-color: rgba(0, 0, 0, 0.7);
       border-radius: 15px;
@@ -52,6 +70,12 @@
   </style>
 </head>
 <body>
+
+  <!-- 🔗 Navigation Menu -->
+  <nav>
+    <a href="index.html">🏠 হোম</a>
+    <a href="income.html">🧱 আয়</a>
+  </nav>
 
   <div class="container">
     <h2>🏠 হোম</h2>
@@ -103,35 +127,3 @@
 
 </body>
 </html>
-
-<script>
-function registerUser() {
-  const name = document.getElementById("name").value;
-  const pass = document.getElementById("password").value;
-
-  if (!name || !pass) {
-    alert("সব তথ্য দিন");
-    return;
-  }
-
-  const user = { name: name, password: pass, balance: 0 };
-  localStorage.setItem("easy_user", JSON.stringify(user));
-
-  // ✅ হোম পেইজে পাঠিয়ে দিচ্ছে:
-  window.location.href = "home.html";
-}
-</script>
-<script>
-function loginUser() {
-  const storedUser = JSON.parse(localStorage.getItem("easy_user"));
-  const pass = document.getElementById("password").value;
-
-  if (!storedUser || storedUser.password !== pass) {
-    alert("ভুল পাসওয়ার্ড!");
-    return;
-  }
-
-  // ✅ লগইন সফল হলে হোমে যাবে:
-  window.location.href = "home.html";
-}
-</script>
