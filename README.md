@@ -32,10 +32,10 @@
 
   <h2>👤 একাউন্ট খুলুন</h2>
 
-  <input type="text" id="name" placeholder="আপনার নাম লিখুন" />
-  <input type="text" id="mobile" placeholder="মোবাইল নাম্বার লিখুন" />
+  <input type="text" id="name" placeholder="আপনার নাম লিখুন" required />
+  <input type="text" id="mobile" placeholder="মোবাইল নাম্বার লিখুন" required />
   <input type="text" id="referral" placeholder="ইনভাইট কোড লিখুন" />
-  <input type="password" id="password" placeholder="পাসওয়ার্ড লিখুন" />
+  <input type="password" id="password" placeholder="পাসওয়ার্ড দিন" required />
   <button onclick="register()">✅ একাউন্ট তৈরি করুন</button>
 
   <div class="profile" id="profile" style="display:none;">
@@ -48,13 +48,13 @@
 
   <script>
     function register() {
-      const name = document.getElementById("name").value;
-      const mobile = document.getElementById("mobile").value;
-      const referral = document.getElementById("referral").value;
+      const name = document.getElementById("name").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const referral = document.getElementById("referral").value.trim();
       const password = document.getElementById("password").value;
 
       if (!name || !mobile || !password) {
-        alert("সব ঘর পূরণ করুন!");
+        alert("নাম, মোবাইল ও পাসওয়ার্ড দিন");
         return;
       }
 
@@ -62,7 +62,7 @@
         name,
         mobile,
         referral,
-        password,
+        password,  // ভবিষ্যতে লগইনের কাজে লাগবে
         balance: 20
       };
 
